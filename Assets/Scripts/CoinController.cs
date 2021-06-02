@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class CoinController : MonoBehaviour
 {
-    static int score = 0;
+    public static int score = 0;
+    static int max_score = 3;
 
     PlayerManager playerManager;
 
@@ -32,6 +34,15 @@ public class CoinController : MonoBehaviour
             {
                 PhotonNetwork.Destroy(gameObject.GetPhotonView());
                 Debug.Log("DESTROYED " + score);
+
+                if(score == max_score)
+                {
+                    score = 0;
+                    if (SceneManager.GetActiveScene().buildIndex!=EndMenu.last_level)
+                        PhotonNetwork.LoadLevel(4);
+                    else
+                        PhotonNetwork.LoadLevel(5);
+                }
             }
         }
     }

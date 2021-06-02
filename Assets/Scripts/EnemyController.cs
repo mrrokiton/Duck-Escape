@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
+using Photon.Pun;
 
 public class EnemyController : MonoBehaviour
 {
+    PlayerManager playerManager;
+
+    PhotonView PV;
+    Rigidbody rb;
+
+    public static int death = 0;
+
     GameObject[] players;
 
     public NavMeshAgent agent;
@@ -24,10 +32,16 @@ public class EnemyController : MonoBehaviour
     public float sightRange;
     public bool playerInSightRange;
 
-    private void Awake()
+    void Awake()
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void Start()
+    {
+        
+        
     }
 
     private void Update()
@@ -73,11 +87,27 @@ public class EnemyController : MonoBehaviour
         agent.SetDestination(player.position);
     }
 
-    private void OnTriggerEnter(Collider collider)
+    void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
-        {
-            Debug.Log("HEHE BOI");
+        Death(collider);
+    }
+
+    void Death(Collider collider)
+    {
+        death++;
+        if (PhotonNetwork.IsMasterClient)
+        { 
+            if (collider.gameObject.tag == "Player")
+            {
+                Debug.Log("DEATH " + death);
+
+                if (death > 0)
+                {
+                    death = 0;
+                    PhotonNetwork.LoadLevel(3);
+                }
+            }
         }
     }
+
 }

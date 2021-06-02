@@ -11,4 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gane.unity
     guid: 85b02f4557b32b8418c665161d1e36f2
+  - enabled: 1
+    path: Assets/Scenes/Gane2.unity
+    guid: 6e5890e4a23f82a4f9c1d45963e32606
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 4367aff81c1c75d468243060860fd151
+  - enabled: 1
+    path: Assets/Scenes/WonLevel.unity
+    guid: eb1108be27fe00c42b4542ac997cf664
+  - enabled: 1
+    path: Assets/Scenes/WonGame.unity
+    guid: 80cd7239c20241b4da4f6a33e15dba33
   m_configObjects: {}

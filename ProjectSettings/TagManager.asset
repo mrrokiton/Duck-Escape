@@ -6,6 +6,7 @@ TagManager:
   tags:
   - terrain
   - Coin
+  - Enemy
   layers:
   - Default
   - TransparentFX

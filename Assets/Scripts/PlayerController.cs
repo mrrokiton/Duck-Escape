@@ -86,4 +86,23 @@ public class PlayerController : MonoBehaviour
 
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
     }
+
+    /*void OnTriggerEnter(Collider collider)
+    {
+        Death(collider);
+    }
+
+    void Death(Collider collider)
+    {
+       
+        if (collider.gameObject.tag == "Enemy")
+        {
+            
+                CoinController.score = 0;
+                PhotonNetwork.LoadLevel(3);
+                Debug.Log("HEHE BOI");
+            
+        }
+
+    }*/
 }
