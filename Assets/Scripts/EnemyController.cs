@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask whatIsGround, whatIsPlayer;
+    public Animator animator;
 
     //patrol
     public Vector3 walkPoint;
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
     {
         //player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -57,6 +59,8 @@ public class EnemyController : MonoBehaviour
 
     private void Patroling()
     {
+        animator.SetBool("Chasing", false);
+        animator.SetBool("Standing", false);
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -66,6 +70,7 @@ public class EnemyController : MonoBehaviour
 
         //Walkpoint reached
         if (distanceToWalkPoint.magnitude < 1f)
+            animator.SetBool("Standing", true);
             walkPointSet = false;
     }
     private void SearchWalkPoint()
@@ -82,6 +87,9 @@ public class EnemyController : MonoBehaviour
 
     private void ChasePlayer()
     {
+        animator.SetBool("Chasing", true);
+        animator.SetBool("Standing", false);
+
         players = GameObject.FindGameObjectsWithTag("Player").OrderBy(x=> Vector3.Distance(this.transform.position, x.transform.position)).ToArray();
         player = players[0].transform;
         agent.SetDestination(player.position);
