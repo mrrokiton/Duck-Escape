@@ -19,6 +19,7 @@ public class HunamController : MonoBehaviour
 
     public NavMeshAgent agent;
     public Transform player;
+    public Animator animator;
     public LayerMask whatIsGround, whatIsPlayer;
 
     //patrol
@@ -37,6 +38,7 @@ public class HunamController : MonoBehaviour
     {
         //PV.GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
         //playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
     private void Update()
@@ -52,6 +54,8 @@ public class HunamController : MonoBehaviour
 
     private void Patroling()
     {
+        animator.SetBool("Chasing", false);
+        animator.SetBool("Standing", false);
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -60,8 +64,10 @@ public class HunamController : MonoBehaviour
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //Walkpoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 1f) {
+            animator.SetBool("Standing", true);
             walkPointSet = false;
+        }
     }
     private void SearchWalkPoint()
     {
@@ -77,6 +83,9 @@ public class HunamController : MonoBehaviour
 
     private void ChasePlayer()
     {
+        animator.SetBool("Chasing", true);
+        animator.SetBool("Standing", false);
+
         players = GameObject.FindGameObjectsWithTag("Player").OrderBy(x => Vector3.Distance(this.transform.position, x.transform.position)).ToArray();
         player = players[0].transform;
         agent.SetDestination(player.position);
