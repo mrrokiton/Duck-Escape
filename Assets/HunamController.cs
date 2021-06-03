@@ -12,6 +12,7 @@ public class HunamController : MonoBehaviour
     static int max_score = 1;
 
     PlayerManager playerManager;
+    [SerializeField] AudioSource sound;
 
     PhotonView PV;
 
@@ -90,15 +91,18 @@ public class HunamController : MonoBehaviour
     void Score(Collider collider)
     {
         score++;
-        if (PhotonNetwork.IsMasterClient)
+        if (collider.gameObject.tag == "Player")
         {
-            if (collider.gameObject.tag == "Player")
+            if (PhotonNetwork.IsMasterClient)
             {
+                sound.Play();
                 PhotonNetwork.Destroy(gameObject.GetPhotonView());
                 Debug.Log("DESTROYED " + score);
 
                 if (score >= max_score)
                 {
+                    
+                    
                     PhotonNetwork.LoadLevel(3);
                 }
             }

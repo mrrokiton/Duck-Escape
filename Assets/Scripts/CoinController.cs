@@ -13,6 +13,10 @@ public class CoinController : MonoBehaviour
 
     PhotonView PV;
 
+    [SerializeField] AudioSource sound;
+    [SerializeField] AudioClip clip;
+
+    
     void Awake()
     {
         //PV.GetComponent<PhotonView>();
@@ -22,20 +26,25 @@ public class CoinController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        
         Score(other);    
     }
 
     void Score(Collider collider)
     {
-        score++;
-        if (PhotonNetwork.IsMasterClient)
+        //score++;
+        if (collider.gameObject.tag == "Player")
         {
-            if (collider.gameObject.tag == "Player")
+            score++;
+            sound.Play();
+            if (PhotonNetwork.IsMasterClient)
             {
+                //this.gameObject.SetActive(false);
                 PhotonNetwork.Destroy(gameObject.GetPhotonView());
                 Debug.Log("DESTROYED " + score);
+                
 
-                if(score == max_score)
+                if (score == max_score)
                 {
                     score = 0;
                     if (SceneManager.GetActiveScene().buildIndex!=EndMenu.last_level)

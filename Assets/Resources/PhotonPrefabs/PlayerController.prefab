@@ -71,8 +71,8 @@ Camera:
   m_GameObject: {fileID: 621457426064973712}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 3615212411193347399}
   - component: {fileID: 9030934589736607633}
   - component: {fileID: -8801915672648621117}
+  - component: {fileID: 7287823731811465950}
   m_Layer: 9
   m_Name: PlayerController
   m_TagString: Player
@@ -283,6 +284,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 9030934589736607633}
+  - {fileID: 7287823731811465950}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -350,3 +352,16 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7287823731811465950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5636327669724912746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35144820bcc25444bb8f0fd767d9423e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SmoothingDelay: 5
