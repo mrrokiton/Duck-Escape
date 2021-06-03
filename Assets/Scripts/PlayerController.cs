@@ -18,10 +18,13 @@ public class PlayerController : MonoBehaviour
 
     PhotonView PV;
 
+    Animator animator;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -30,14 +33,19 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
             Destroy(rb);
+        } else {
+            foreach (MeshRenderer renderer in GetComponentsInChildren<MeshRenderer>()) {
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+            }
         }
         
     }
 
     void Update()
     {
-        if (!PV.IsMine)
+        if (!PV.IsMine) {
             return;
+        }
 
         Look();
         Move();
@@ -61,7 +69,12 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        float axisHorizontal = Input.GetAxisRaw("Horizontal");
+        float axisVertical = Input.GetAxisRaw("Vertical");
+
+        animator.SetBool("Walking", axisHorizontal != 0 || axisVertical != 0);
+
+        Vector3 moveDir = new Vector3(axisHorizontal, 0, axisVertical).normalized;
 
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
     }
