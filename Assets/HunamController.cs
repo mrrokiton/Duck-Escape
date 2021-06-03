@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class HunamController : MonoBehaviour
 {
+    public AudioSource sound;
+
     public static int score = 0;
     static int max_score = 1;
 
@@ -83,6 +85,9 @@ public class HunamController : MonoBehaviour
 
     private void ChasePlayer()
     {
+        if (!animator.GetBool("Chasing")) sound.Play();
+
+
         animator.SetBool("Chasing", true);
         animator.SetBool("Standing", false);
 

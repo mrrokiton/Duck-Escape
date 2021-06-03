@@ -6,6 +6,8 @@ using Photon.Realtime;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
+    public AudioSource sound1, sound2;
+
     [SerializeField] GameObject cameraHolder;
 
     [SerializeField] float mouseSensitivity, sprintSpeed, walkSpeed, jumpForce, smoothTime;
@@ -73,6 +75,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         float axisHorizontal = Input.GetAxisRaw("Horizontal");
         float axisVertical = Input.GetAxisRaw("Vertical");
         bool isWalking = axisHorizontal != 0 || axisVertical != 0;
+        if(animator.GetBool("Walking")!=isWalking)
+        {
+            if (Random.Range(0, 2)==0)
+                sound1.Play();
+            else
+                sound2.Play();
+        }
         animator.SetBool("Walking", isWalking);
 
         if (PV.IsMine) {
