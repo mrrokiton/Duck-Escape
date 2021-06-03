@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject cameraHolder;
 
@@ -71,12 +72,26 @@ public class PlayerController : MonoBehaviour
     {
         float axisHorizontal = Input.GetAxisRaw("Horizontal");
         float axisVertical = Input.GetAxisRaw("Vertical");
+        bool isWalking = axisHorizontal != 0 || axisVertical != 0;
+        animator.SetBool("Walking", isWalking);
 
-        animator.SetBool("Walking", axisHorizontal != 0 || axisVertical != 0);
+        if (PV.IsMine) {
+            ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable {
+                { "Walking", isWalking }
+            };
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(table);
+        }
 
         Vector3 moveDir = new Vector3(axisHorizontal, 0, axisVertical).normalized;
 
         moveAmount = Vector3.SmoothDamp(moveAmount, moveDir * (Input.GetKey(KeyCode.LeftShift) ? sprintSpeed : walkSpeed), ref smoothMoveVelocity, smoothTime);
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps) {
+        if (!PV.IsMine && targetPlayer == PV.Owner) {
+            animator.SetBool("Walking", (bool) changedProps["Walking"]);
+        }
     }
 
     void Jump()
