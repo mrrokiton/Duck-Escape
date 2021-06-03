@@ -103,10 +103,11 @@ public class HunamController : MonoBehaviour
 
     void Score(Collider collider)
     {
-        score++;
-        if (PhotonNetwork.IsMasterClient)
+        
+        if (collider.gameObject.tag == "Player")
         {
-            if (collider.gameObject.tag == "Player")
+            score++;
+            if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.Destroy(gameObject.GetPhotonView());
                 Debug.Log("DESTROYED " + score);

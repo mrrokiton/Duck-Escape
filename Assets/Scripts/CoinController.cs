@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class CoinController : MonoBehaviour
 {
+    public AudioClip sound;
+
     public static int score = 0;
     static int max_score = 3;
 
@@ -27,10 +29,13 @@ public class CoinController : MonoBehaviour
 
     void Score(Collider collider)
     {
-        score++;
-        if (PhotonNetwork.IsMasterClient)
+        
+        //score++;
+        if (collider.gameObject.tag == "Player")
         {
-            if (collider.gameObject.tag == "Player")
+            score++;
+            AudioSource.PlayClipAtPoint(sound, this.transform.position);
+            if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.Destroy(gameObject.GetPhotonView());
                 Debug.Log("DESTROYED " + score);
@@ -47,6 +52,7 @@ public class CoinController : MonoBehaviour
         }
     }
 
+    
     /*void DIE()
     {
         playerManager.DIE();
