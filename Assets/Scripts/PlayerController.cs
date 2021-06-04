@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             }
         }
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -122,6 +122,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
 
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        
+            
+            //Stop Moving/Translating
+            rb.velocity = Vector3.zero;
+
+            //Stop rotating
+            rb.angularVelocity = Vector3.zero;
+        
     }
 
     /*void OnTriggerEnter(Collider collider)

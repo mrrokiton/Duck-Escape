@@ -20,6 +20,11 @@ public class EndMenu : MonoBehaviour
         Instance = this;
     }
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;   
+    }
+
     void Update()
     {       
         EnemyController.death = 0;

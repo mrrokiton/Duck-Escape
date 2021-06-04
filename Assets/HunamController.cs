@@ -58,7 +58,7 @@ public class HunamController : MonoBehaviour
     {
         animator.SetBool("Chasing", false);
         animator.SetBool("Standing", false);
-        if (!walkPointSet) SearchWalkPoint();
+        float dist = agent.remainingDistance; if (dist != Mathf.Infinity && agent.pathStatus == NavMeshPathStatus.PathComplete && agent.remainingDistance < 0.2f) SearchWalkPoint(); else walkPointSet = false;
 
         if (walkPointSet)
             agent.SetDestination(walkPoint);
@@ -79,7 +79,7 @@ public class HunamController : MonoBehaviour
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
+        //if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
             walkPointSet = true;
     }
 
