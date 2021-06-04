@@ -43,7 +43,7 @@ public class HunamController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         //playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         //Check for sight and attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);

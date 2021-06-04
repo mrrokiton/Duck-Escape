@@ -9,7 +9,7 @@ public class CoinController : MonoBehaviour
     public AudioClip sound;
 
     public static int score = 0;
-    static int max_score = 3;
+    static int max_score = 6;
 
     PlayerManager playerManager;
 
